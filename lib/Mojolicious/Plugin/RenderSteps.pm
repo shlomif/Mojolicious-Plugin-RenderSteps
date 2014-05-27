@@ -1,7 +1,7 @@
 package Mojolicious::Plugin::RenderSteps;
 use Mojo::Base 'Mojolicious::Plugin';
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub register {
   my ($self, $app) = @_;
@@ -9,12 +9,15 @@ sub register {
     render_steps => sub {
       my ($self, @steps) = @_;
       $self->render_later;
+      $self->stash->{'render.steps'}++;
       my $delay = Mojo::IOLoop->delay(@steps);
       $delay->on(error => sub { $self->render_exception });
       $delay->on(
         finish => sub {
           my $delay = shift;
-          $self->render_maybe or $self->render_not_found;
+          $self->render_maybe
+            or $self->render_not_found
+            unless $self->stash->{'render.steps'}--;
         }
       );
       $delay->wait unless Mojo::IOLoop->is_running;

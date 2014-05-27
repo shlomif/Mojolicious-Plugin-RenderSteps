@@ -1,3 +1,6 @@
+0.03 
+  - Implement support for nesting steps
+
 0.02 26-05-2014
   - Fix a pod typo
   - Implicit wait for actions running without a IOLoop
