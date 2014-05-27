@@ -17,7 +17,7 @@ sub register {
           my $delay = shift;
           $self->render_maybe
             or $self->render_not_found
-            unless $self->stash->{'rendersteps.depth'}--;
+            unless --$self->stash->{'rendersteps.depth'};
         }
       );
       $delay->wait unless Mojo::IOLoop->is_running;
