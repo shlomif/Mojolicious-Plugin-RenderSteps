@@ -8,6 +8,7 @@ sub register {
   $app->helper(
     render_steps => sub {
       my ($self, @steps) = @_;
+      my $tx = $self->tx;
       $self->render_later;
       $self->stash->{'rendersteps.depth'}++;
       my $delay = Mojo::IOLoop->delay(@steps);
@@ -15,6 +16,7 @@ sub register {
       $delay->on(
         finish => sub {
           my $delay = shift;
+          $tx;
           $self->render_maybe
             or $self->render_not_found
             unless --$self->stash->{'rendersteps.depth'};
