@@ -42,7 +42,7 @@ Mojolicious::Plugin::RenderSteps - ASync controllers without the boilerplate
   plugin 'RenderSteps';
 
   get '/foo' => sub {
-    my $self->shift;
+    my $self=shift;
     $self->render_steps(sub {
       my $delay=shift;
       $self->ua->get('reddit.com/',$delay->begin);
@@ -61,17 +61,6 @@ rendering and error handling. This makes async actions behave like sync ones.
 
 render_steps also automatically calls wait if the ioloop isn't running, so steps
 will function under PSGI, for instance.
-
-=head1 METHODS
-
-L<Mojolicious::Plugin::RenderSteps> inherits all methods from
-L<Mojolicious::Plugin> and implements the following new ones.
-
-=head2 register
-
-  $plugin->register(Mojolicious->new);
-
-Creates the render_steps helper.
 
 =head1 SEE ALSO
 
