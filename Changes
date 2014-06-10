@@ -1,3 +1,6 @@
+0.04 10-06-2014
+  - Fix exception rendering
+  - Fix warning in undef.
 0.03 31-05-2014
   - Implement support for nesting steps
   - Capture tx for not_found
