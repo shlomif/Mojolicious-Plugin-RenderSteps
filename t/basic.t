@@ -26,14 +26,14 @@ get '/error' => sub {
     sub {
       shift->pass;
     },
-    sub { die "failure"; }
+    sub { die "failure is not an option"; }
   );
 };
 
 
 my $t = Test::Mojo->new;
 $t->get_ok('/')->status_is(200)->content_is("Hello Mojo!\n");
-$t->get_ok('/error')->status_is(500);
+$t->get_ok('/error')->status_is(500)->content_like(qr/option/);
 
 
 done_testing();
