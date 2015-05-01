@@ -12,7 +12,7 @@ sub register {
       $self->render_later;
       $self->stash->{'rendersteps.depth'}++;
       my $delay = Mojo::IOLoop->delay(@steps);
-      $delay->on(error => sub { $self->render_exception(pop) });
+      $delay->on(error => sub { $self->helpers->reply->exception(pop) });
       $delay->on(
         finish => sub {
           my $delay = shift;
